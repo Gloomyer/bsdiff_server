@@ -12,6 +12,10 @@
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
+int main(int argc, char* argv[]){
+    return 0;
+}
+
 int diff_patch(int argc, char *argv[]);
 void offtout(off_t x, u_char *buf);
 off_t search(off_t *I, u_char *old, off_t oldsize,
