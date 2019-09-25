@@ -1,42 +1,79 @@
 package com.gloomyer.diff.utils;
 
-import com.gloomyer.diff.DiffApplication;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.net.URL;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.Properties;
 
+@Component("androidApkDiffUtils")
 public class AndroidApkDiffUtils {
-    private static boolean success;
+    private static int status;
 
     /**
-     * 是否成功的加载了so对象
+     * 判断so是否加载成功!
      *
-     * @return 是否成功
+     * @return 是否加载成功!
      */
-    public static boolean isSuccess() {
-        return success;
+    public boolean isSuccess() {
+        if (status == 0) {
+            load();
+            return isSuccess();
+        }
+        return status == 1;
     }
 
-    static {
+    /**
+     * 加载so文件
+     */
+    private void load() {
         try {
-            boolean isMacOs = System.getProperty("os.name").toLowerCase().contains("mac");
-            File soPath = new File(DiffApplication.class.getResource("/").getFile());
-            soPath = new File(soPath, "jniLibs");
-            if (isMacOs) {
-                soPath = new File(soPath, "mac");
-            } else {
-                soPath = new File(soPath, "linux");
+            ClassPathResource resource = new ClassPathResource("application.properties");
+            InputStream is = resource.getInputStream();
+            byte[] buffer = new byte[2048];
+            int len;
+            StringBuilder sb = new StringBuilder();
+            while ((len = is.read(buffer)) > 0) {
+                sb.append(new String(buffer, 0, len));
             }
-            soPath = new File(soPath, "libGdiff.so");
-            System.out.println(soPath);
-            System.load(soPath.getAbsolutePath());
-            success = true;
+
+            Properties properties = new Properties();
+            properties.load(resource.getInputStream());
+            String soDir = properties.getProperty("soDir");
+            System.out.println("soDir:" + soDir);
+            is.close();
+
+            boolean isMacOs = System.getProperty("os.name").toLowerCase().contains("mac");
+            resource = new ClassPathResource("jniLibs" + File.separator
+                    + (isMacOs ? "mac" : "linux") + File.separator
+                    + "libGdiff.so");
+            is = resource.getInputStream();
+            File soFile = new File(soDir);
+            if (!soFile.exists()) {
+                soFile.mkdirs();
+            }
+            soFile = new File(soDir, "libGdiff.so");
+            //copy so 到指定目录
+            FileOutputStream fos = new FileOutputStream(soFile);
+            while ((len = is.read(buffer)) > 0) {
+                fos.write(buffer, 0, len);
+                fos.flush();
+            }
+
+            fos.close();
+            is.close();
+            //存储so
+            System.load(soFile.getAbsolutePath());
+            status = 1;
         } catch (Throwable e) {
             e.printStackTrace();
-            success = false;
+            status = 2;
         }
-        System.out.println("success:" + success);
+        System.out.println("success:" + isSuccess());
     }
+
 
     public static native int diff(String oldApkPath, String newApkPath, String outputPatchPath);
 

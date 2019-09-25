@@ -6,6 +6,7 @@ import com.gloomyer.diff.domain.body.UpdateReqBody;
 import com.gloomyer.diff.enums.AndroidTaskStatus;
 import com.gloomyer.diff.runner.AndroidApkDiffRunnerFactory;
 import com.gloomyer.diff.runner.AndroidDiffRunner;
+import com.gloomyer.diff.utils.AndroidApkDiffUtils;
 import com.gloomyer.diff.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,9 @@ public class ApkDiffController {
 
     @Value("${currentApkKey}")
     private String currentApkKey;
+
+    @Autowired
+    AndroidApkDiffUtils mDiffUtils;
 
     @RequestMapping(path = "/update", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
@@ -69,5 +73,19 @@ public class ApkDiffController {
         info.setVersion("1.2.0");
         info.setUrl("http://baidu.com");
         return BaseResp.success(info);
+    }
+
+    @RequestMapping(path = "/test", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String test() {
+        int ret = -1;
+        if (mDiffUtils.isSuccess()) {
+            ret = AndroidApkDiffUtils.diff(
+                    "/root/1.txt",
+                    "/root/2.txt",
+                    "/root/patch.patch"
+            );
+        }
+        return "success:" + ret;
     }
 }

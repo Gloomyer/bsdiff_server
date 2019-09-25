@@ -47,7 +47,7 @@ public class AndroidDiffRunnerImpl implements Runnable, AndroidDiffRunner {
     }
 
 
-    @Value("${apkDiffCacheDir}")
+    @Value("${diff_update.cache_file}")
     private String cacheDir;
     @Value("${preUrl}")
     private String preUrl;
@@ -82,6 +82,11 @@ public class AndroidDiffRunnerImpl implements Runnable, AndroidDiffRunner {
 
     @Override
     public void run() {
+        File cache = new File(cacheDir);
+        if (!cache.exists()) {
+            cache.mkdirs();
+        }
+
         setStatus(AndroidTaskStatus.RUNING);
         System.out.println(toString());
 
