@@ -49,22 +49,27 @@ public class AndroidApkDiffUtils {
             resource = new ClassPathResource("jniLibs" + File.separator
                     + (isMacOs ? "mac" : "linux") + File.separator
                     + "libGdiff.so");
-            is = resource.getInputStream();
             File soFile = new File(soDir);
             if (!soFile.exists()) {
                 soFile.mkdirs();
             }
+
             soFile = new File(soDir, "libGdiff.so");
-            //copy so 到指定目录
-            FileOutputStream fos = new FileOutputStream(soFile);
-            while ((len = is.read(buffer)) > 0) {
-                fos.write(buffer, 0, len);
-                fos.flush();
+
+            if(!soFile.exists()){
+                //copy so 到指定目录
+                is = resource.getInputStream();
+                FileOutputStream fos = new FileOutputStream(soFile);
+                while ((len = is.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                    fos.flush();
+                }
+
+                fos.close();
+                is.close();
+                //存储so
             }
 
-            fos.close();
-            is.close();
-            //存储so
             System.load(soFile.getAbsolutePath());
             status = 1;
         } catch (Throwable e) {
