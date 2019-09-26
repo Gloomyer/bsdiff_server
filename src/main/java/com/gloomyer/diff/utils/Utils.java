@@ -91,4 +91,33 @@ public class Utils {
         }
         return false;
     }
+
+    /**
+     * 版本比较工具类
+     *
+     * @param oldVersion 老的版本
+     * @param newVersion 线上版本
+     * @return 是否可以更新
+     */
+    public static boolean canUpdate(String oldVersion, String newVersion) {
+        try {
+            String[] olds = oldVersion.split("\\.");
+            long oldVer = 0;
+            for (String old : olds) {
+                oldVer = oldVer << 8;
+                oldVer += Integer.parseInt(old);
+            }
+            String[] news = newVersion.split("\\.");
+            long newVer = 0;
+            for (String n : news) {
+                newVer = newVer << 8;
+                newVer += Integer.parseInt(n);
+            }
+            return newVer > oldVer;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

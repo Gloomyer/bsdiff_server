@@ -22,6 +22,8 @@ public class ApkDiffController {
 
     @Value("${currentApkKey}")
     private String currentApkKey;
+    @Value("${currentAppVersion}")
+    private String currentAppVersion;
 
     @Autowired
     AndroidApkDiffUtils mDiffUtils;
@@ -32,10 +34,11 @@ public class ApkDiffController {
         UpdateBean info = new UpdateBean();
 
 
-        //如果Android没有给key， 那么不走差分逻辑
-        //两者一样，也不走差分任务
+        //如果Android没有给key， 那么不走差分逻辑 如果差分工具没有加载成功也不走差分任务 还需要判断是Android客户端请求的
         if (!StringUtils.isEmpty(body.getKey())
-                && !currentApkKey.equals(body.getKey())) {
+                && !currentApkKey.equals(body.getKey())
+                && mDiffUtils.isSuccess()
+                && Utils.canUpdate(body.getVersion(), currentAppVersion)) {
             //1:从redis 或者数据库中获取最新的apk的key！,我这里从配置文件中读取了
             System.out.println("服务端最新版本的版本key:" + currentApkKey);
 

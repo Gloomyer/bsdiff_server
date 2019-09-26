@@ -3,6 +3,7 @@ package com.gloomyer.diff;
 import com.gloomyer.diff.runner.DiffUpload;
 import com.gloomyer.diff.runner.impl.AndroidDiffRunnerImpl;
 import com.gloomyer.diff.utils.AndroidApkDiffUtils;
+import com.gloomyer.diff.utils.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,10 @@ public class DiffApplicationTests {
     @Test
     public void testRunner() {
         mDiffUtils.isSuccess();
+    }
+
+    @Test
+    public void verTest() {
+        Utils.canUpdate("2.0.0", "1.9.9");
     }
 }

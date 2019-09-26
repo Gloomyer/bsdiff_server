@@ -7,6 +7,7 @@ import com.gloomyer.diff.runner.DiffUpload;
 import com.gloomyer.diff.utils.AndroidApkDiffUtils;
 import com.gloomyer.diff.utils.SpringUtil;
 import com.gloomyer.diff.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
