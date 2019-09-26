@@ -25,7 +25,7 @@ public class QNDiffUploadImpl implements DiffUpload {
     private String accessKey;
     @Value("${QNSecretKey}")
     private String secretKey;
-    @Value("${QNAccessKey}")
+    @Value("${QNBucket}")
     private String QNBucket;
 
     @Override

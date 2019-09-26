@@ -104,7 +104,7 @@ public class AndroidDiffRunnerImpl implements Runnable, AndroidDiffRunner {
         //下载老版本的包
         //如果没有缓存就去下载
         if (!oldApkFile.exists()) {
-            String newApkUrl = MessageFormat.format(preUrl, oldApkFile);
+            String newApkUrl = MessageFormat.format(preUrl, oldApkKey);
             if (!Utils.downloadFile(newApkUrl, oldApkFile)) {
                 setStatus(AndroidTaskStatus.FAIL);
                 return;

@@ -19,4 +19,12 @@ public class UpdateReqBody {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return "UpdateReqBody{" +
+                "key='" + key + '\'' +
+                ", version='" + version + '\'' +
+                '}';
+    }
 }
