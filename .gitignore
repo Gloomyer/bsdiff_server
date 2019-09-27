@@ -32,5 +32,5 @@ build/
 
 
 *.o
-*.so
+/cpp/*.so
 *.h.gch
