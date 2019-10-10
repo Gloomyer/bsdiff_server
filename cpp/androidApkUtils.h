@@ -2,8 +2,8 @@
 #include <jni.h>
 /* Header for class com_gloomyer_diff_utils_AndroidApkDiffUtils */
 
-#ifndef _Included_com_gloomyer_diff_utils_AndroidApkDiffUtils
-#define _Included_com_gloomyer_diff_utils_AndroidApkDiffUtils
+#ifndef _Included_com_sojourn_domain_util_app_AndroidApkDiffUtils
+#define _Included_com_sojourn_domain_util_app_AndroidApkDiffUtils
 #ifdef __cplusplus
 extern "C" {
 #endif
