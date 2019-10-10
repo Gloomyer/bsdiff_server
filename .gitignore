@@ -34,3 +34,4 @@ build/
 *.o
 /cpp/*.so
 *.h.gch
+.DS_Store/
