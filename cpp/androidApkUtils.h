@@ -12,7 +12,7 @@ extern "C" {
  * Method:    diff
  * Signature: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
  */
-JNIEXPORT jint JNICALL Java_com_gloomyer_diff_utils_AndroidApkDiffUtils_diff
+JNIEXPORT jint JNICALL Java_com_sojourn_domain_util_app_AndroidApkDiffUtils_diff
   (JNIEnv *, jclass, jstring, jstring, jstring);
 
 #ifdef __cplusplus

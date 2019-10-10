@@ -31,7 +31,7 @@ void qsufsort(off_t *I, off_t *V, u_char *old, off_t oldsize);
 off_t matchlen(u_char *old, off_t oldsize, u_char *new, off_t newsize);
 void split(off_t *I, off_t *V, off_t start, off_t len, off_t h);
 
-JNIEXPORT jint JNICALL Java_com_gloomyer_diff_utils_AndroidApkDiffUtils_diff(JNIEnv *env, jclass jcls,
+JNIEXPORT jint JNICALL Java_com_sojourn_domain_util_app_AndroidApkDiffUtils_diff(JNIEnv *env, jclass jcls,
                                                                              jstring _old_apk_path, jstring _new_apk_path, jstring _opt_patch_path)
 {
   char *argv[4] = {"BsDiff"};
